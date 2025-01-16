@@ -16,3 +16,6 @@ const writeTextToFile = `This is what we know about the Avocado: ${fs.writeFileS
   outputAsText
 )}`;
 
+const writeTextToFile2 = `This is what we know about the Avocado: ${outputAsText}.\nCreated on ${new Date().toLocaleString()}`;
+
+fs.writeFileSync("./txt/addEtwas.txt", writeTextToFile2);
