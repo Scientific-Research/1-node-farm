@@ -10,3 +10,9 @@ const outputAsNumbers = fs.readFileSync("./txt/input.txt"); // without assign th
 // Assigning the second parameter as "utf-8", we will have the TEXT as we expected!
 const outputAsText = fs.readFileSync("./txt/input.txt", "utf-8");
 console.log(outputAsText);
+
+const writeTextToFile = `This is what we know about the Avocado: ${fs.writeFileSync(
+  "./txt/addEtwas.txt",
+  outputAsText
+)}`;
+
