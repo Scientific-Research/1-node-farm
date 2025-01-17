@@ -52,9 +52,14 @@ const readFirstData = () => {
       fs.readFile(`./txt/append.txt`, (err, data3) => {
         err ? console.log(err) : console.log(`\n${data2} \n\n${data3}`);
 
-        fs.writeFile(`./txt/addedTwoTexts.txt`, data3, (err) => {
-          data3;
-        });
+        console.log("-------------------Writing The Files--------------------");
+        fs.writeFile(
+          `./txt/addedTwoTexts.txt`,
+          `${data2}\n\n${data3}`,
+          (err) => {
+            console.log(`${data2}\n\n${data3}`);
+          }
+        );
       });
     });
   });
