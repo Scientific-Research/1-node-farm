@@ -5,6 +5,7 @@ console.log(hello);
 
 // Blocking, Synchronous way
 ///////////////////////////////////////////////////////////
+console.log("---------------Blocking, Synchronous way----------------------");
 // How to write data into files and how to write the data from the files using 'fs' module in NODE:
 // first is the path to the file that we want to read from that:
 const outputAsNumbers = fs.readFileSync("./txt/input.txt"); // without assign the second parameter, it will gives us only buffers which are the numbers and we don't want them!
@@ -23,7 +24,10 @@ const writeTextToFile2 = `This is what we know about the Avocado: ${outputAsText
 fs.writeFileSync("./txt/addEtwas.txt", writeTextToFile2);
 ///////////////////////////////////////////////////////////
 
+console.log("-----------------Non-Blocking, Asynchronous way--------------");
 // Non-Blocking, Asynchronous way
 fs.readFile("./txt/start.txt", (err, data) => {
   err ? console.log(err) : console.log(`The data is: "${data}"`);
 });
+
+console.log("We see this data first and then async Data!");
