@@ -44,8 +44,14 @@ const readFirstData = () => {
   fs.readFile("./txt/start.txt", (err, data) => {
     err ? console.log(err) : console.log(`The first data is: "${data}"`);
 
-    fs.readFile(`./txt/${data}.txt`, (err, data) => {
-      err ? console.log(err) : console.log(`The final data is: "${data}"`);
+    // data is read-this and this would be the folder address for the second fs.readFile()
+    // `./txt/${data}.txt` would be read-this.txt
+    fs.readFile(`./txt/${data}.txt`, (err, data2) => {
+      err ? console.log(err) : console.log(`The final data is: "${data2}"`);
+
+      fs.readFile(`./txt/append.txt`, (err, data3) => {
+        err ? console.log(err) : console.log(`\n${data2} \n\n${data3}`);
+      });
     });
   });
 };
