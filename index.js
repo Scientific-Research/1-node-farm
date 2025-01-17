@@ -40,9 +40,15 @@ console.log("-----------------Non-Blocking, Asynchronous way--------------");
 //   });
 // })();
 
+console.log("--------------------------CALLBACK HELL------------------------");
 const readFirstData = () => {
+  console.log("-------------------Reading The Files--------------------");
   fs.readFile("./txt/start.txt", (err, data) => {
-    err ? console.log(err) : console.log(`The first data is: "${data}"`);
+    if (err) {
+      return console.log(`ERROR ☠️☠️☠️`);
+    } else {
+      console.log(`The first data is: "${data}"`);
+    }
 
     // data is read-this and this would be the folder address for the second fs.readFile()
     // `./txt/${data}.txt` would be read-this.txt
