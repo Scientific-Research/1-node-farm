@@ -24,6 +24,6 @@ fs.writeFileSync("./txt/addEtwas.txt", writeTextToFile2);
 ///////////////////////////////////////////////////////////
 
 // Non-Blocking, Asynchronous way
-fs.readFile("./txt/start.txt", () => {
-  console.log("Reading Finished!");
+fs.readFile("./txt/start.txt", (err, data) => {
+  err ? console.log(err) : console.log(`The data is: "${data}"`);
 });
