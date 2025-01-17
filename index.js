@@ -45,7 +45,7 @@ const readFirstData = () => {
   console.log("-------------------Reading The Files--------------------");
   fs.readFile("./txt/start.txt", (err, data) => {
     if (err) {
-      return console.log(`ERROR ☠️☠️☠️`);
+      return console.log(`ERROR ☠️☠️☠️`); // return doesn't let the program go further(ignore the remaining of the program) and the customized ERROR message is much better than the normal compiler ERROR!
     } else {
       console.log(`The first data is: "${data}"`);
     }
