@@ -1,3 +1,4 @@
+import { rejects } from "assert";
 import fs from "fs"; // fs gives us a lot of functions and methods that we can use them here => The NODE is based on the different modules!
 
 const hello = "hello world";
@@ -26,8 +27,27 @@ fs.writeFileSync("./txt/addEtwas.txt", writeTextToFile2);
 
 console.log("-----------------Non-Blocking, Asynchronous way--------------");
 // Non-Blocking, Asynchronous way
-fs.readFile("./txt/start.txt", (err, data) => {
-  err ? console.log(err) : console.log(`The data is: "${data}"`);
-});
+// fs.readFile("./txt/start.txt", (err, data) => {
+//   err ? console.log(err) : console.log(`The data is: "${data}"`);
+// });
 
-console.log("We see this data first and then async Data!");
+// console.log("We see this data first and then async Data!");
+
+// using nested Async reading the files using .then
+// (async () => {
+//   fs.readFile("./txt/start.txt", (err, data) => {
+//     err ? console.log(err) : console.log(`The data is: "${data}"`);
+//   });
+// })();
+
+const readFirstData = () => {
+  fs.readFile("./txt/start.txt", (err, data) => {
+    err ? console.log(err) : console.log(`The first data is: "${data}"`);
+
+    fs.readFile(`./txt/${data}.txt`, (err, data) => {
+      err ? console.log(err) : console.log(`The final data is: "${data}"`);
+    });
+  });
+};
+
+readFirstData();
