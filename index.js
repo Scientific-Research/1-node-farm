@@ -29,20 +29,20 @@ const server = http.createServer((req, res) => {
     // We have now get the JS object and loop over the content to get the features for the card:
     objectData.map((d) => {
       console.log(d);
+
+      objectData ? res.end(d) : res.end(err);
     });
 
-    fs.readFile(
-      `${__dirname}/templates/template-overview.html`,
-      "utf-8",
+    // fs.readFile(
+    //   `${__dirname}/templates/template-overview.html`,
+    //   "utf-8",
 
-      (err, data) => {
-        res.writeHead(200, {
-          "content-type": "text/html",
-        });
-      }
-    );
-
-    data ? res.end(data) : res.end(err);
+    //   (err, data) => {
+    //     res.writeHead(200, {
+    //       "content-type": "text/html",
+    //     });
+    //   }
+    // );
 
     // Product page
   } else if (pathName === "/product") {
