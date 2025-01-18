@@ -12,7 +12,9 @@ const server = http.createServer((req, res) => {
 
   // IMPLEMENTING ROUTING:
   const pathName = req.url;
-  if (pathName === "/overview") res.end("This is the OVERVIEW page!");
+  //  "/" means root!
+  if (pathName === "/" || pathName === "/overview")
+    res.end("This is the OVERVIEW page!");
   if (pathName === "/product") res.end("This is the PRODUCT page!");
 
   // to send back a response to the client from server:
