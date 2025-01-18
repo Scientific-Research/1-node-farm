@@ -10,15 +10,25 @@ import url from "url";
 const server = http.createServer((req, res) => {
   console.log(req.url); // when i give http://127.0.0.1:8000/overview as request in the browser, i get this as req.url => /overview and /favicon.ico
 
-  // IMPLEMENTING ROUTING:
+  // IMPLEMENTING ROUTING => Have different responses for different routes:
   const pathName = req.url;
   //  "/" means root!
   if (pathName === "/" || pathName === "/overview")
     res.end("This is the OVERVIEW page!");
-  if (pathName === "/product") res.end("This is the PRODUCT page!");
+  else if (pathName === "/product") res.end("This is the PRODUCT page!");
+  else {
+    // res.writeHead(404, "The page not found!");
+    res.writeHead(404, {
+      // The browser expects some HTML file => Therefore, we write in res.end() down below a line of HTML!
+      "Content-type": "text/html",
+      "my-own-header": "hello-world",
+    });
+    res.end(`<h1>The Page could not be found - 404</h1>`);
+  }
 
   // to send back a response to the client from server:
   // Each time a new request hits our server, the call back function will be called and send a response to the user!
+
   // res.end("Hello from the SERVER!"); // .end => to send a plain text(a very simple response) to the user, when a certain request comes in!
 
   // When i want to send a REQUEST to the SERVER, I have to RELOAD the BROWSER one Time! and in this case, i get again the same RESPONSE in the BROWSER => "Hello from the SERVER!"
