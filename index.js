@@ -5,6 +5,11 @@ import http from "http";
 import url from "url";
 
 //////////////////////////////////////SERVER SECTION////////////////////////////
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+// Get the current directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // 1) Create the Server => the callback fired off each time a new request hits the server:
 const server = http.createServer((req, res) => {
@@ -17,7 +22,9 @@ const server = http.createServer((req, res) => {
     res.end("This is the OVERVIEW page!");
   else if (pathName === "/product") res.end("This is the PRODUCT page!");
   else if (pathName === "/api") {
-    fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
+    // fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
+    // A better version is to use __dirname instead of dot(.). in this case, it doesn't matter where you run your node, __dirname points out always to the current directory name!
+    fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
       res.writeHead(200, {
         // The browser expects some JSON data => Therefore, our data would be JSON down below in our ternary operator!
         "Content-type": "text/json",
