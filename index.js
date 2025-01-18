@@ -17,7 +17,18 @@ const server = http.createServer((req, res) => {
 
 // 2) Run the server to listen to incoming request from the client:
 // START UP THE SERVER AND LISTENING TO THE INCOMING REQUETS:
-const PORT = 3000;
+
+/* 
+what is nullish coalescing operator?
+The nullish coalescing operator (??) is a logical operator in JavaScript that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand
+*/
+
+// const PORT = 0 ?? 8000; SUPPORTS ONLY NULL AND UNDEFINED!
+
+const PORT = null || 8000; // IN ADDITION TO WHAT SUPPORT nullish coalescing operator, OR SUPPORTS false AND NaN TOO!
+
+//NOTE: only when the left-hand is null o undefined returns the right-hand operator but OR || supports the NaN and false values too => THTA'S WHY IS THE BEST TO USE OR INSTEAD OF ?? Operator!
+
 // server.listen(PORT, "127.0.0.1", () => { "127.0.0.1" is DEFAULT and we don't need even to mention it!
 server.listen(PORT, () => {
   console.log(`The server is listening on port ${PORT}...`);
