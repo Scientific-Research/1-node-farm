@@ -25,13 +25,33 @@ const server = http.createServer((req, res) => {
     // fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
     // A better version is to use __dirname instead of dot(.). in this case, it doesn't matter where you run your node, __dirname points out always to the current directory name!
     fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
+      /////////////////////////////////////////////
+      // Jonas Solution
+      const objectData = JSON.parse(data); // convert the JSON string to a JS object
+      console.log(objectData);
       res.writeHead(200, {
         // The browser expects some JSON data => Therefore, our data would be JSON down below in our ternary operator!
-        "Content-type": "text/json",
-        "my-own-header": "hello-world",
+        "Content-Type": "application/json",
       });
-      data ? res.end(`${data}`) : res.end(`${err}`);
-      console.log(data);
+
+      // NOTE: The browser can display the JSON string and not the JS Object, Therefore, we have to convert the objectData as JS Object to a JSON string using JSON.stringify()
+      objectData ? res.end(`${JSON.stringify(objectData)}`) : res.end(`${err}`);
+      // data ? res.end(`${data}`) : res.end(`${err}`); // This is the same as above statement!
+
+      // NOTE: The browser can not display the JS Object and can display the JSON string, that's why the below statement will not work because the objectData is a JS object
+      // objectData ? res.end(`${objectData}`) : res.end(`${err}`);
+      /////////////////////////////////////////////
+
+      /////////////////////////////////////////////
+      // My Solution
+      // res.writeHead(200, {
+      //   // The browser expects some JSON data => Therefore, our data would be JSON down below in our ternary operator!
+      //   "Content-type": "text/json",
+      //   "my-own-header": "hello-world",
+      // });
+      // data ? res.end(`${data}`) : res.end(`${err}`);
+      // console.log(data);
+      /////////////////////////////////////////////
     });
   } else {
     // res.writeHead(404, "The page not found!");
