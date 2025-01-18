@@ -2,14 +2,22 @@ import fs from "fs"; // fs gives us a lot of functions and methods that we can u
 
 // To get the networking capabilities: import another module => http => building a http server
 import http from "http";
+import url from "url";
 
 //////////////////////////////////////SERVER SECTION////////////////////////////
 
 // 1) Create the Server => the callback fired off each time a new request hits the server:
 const server = http.createServer((req, res) => {
+  console.log(req.url); // when i give http://127.0.0.1:8000/overview as request in the browser, i get this as req.url => /overview and /favicon.ico
+
+  // IMPLEMENTING ROUTING:
+  const pathName = req.url;
+  if (pathName === "/overview") res.end("This is the OVERVIEW page!");
+  if (pathName === "/product") res.end("This is the PRODUCT page!");
+
   // to send back a response to the client from server:
   // Each time a new request hits our server, the call back function will be called and send a response to the user!
-  res.end("Hello from the SERVER!"); // .end => to send a plain text(a very simple response) to the user, when a certain request comes in!
+  // res.end("Hello from the SERVER!"); // .end => to send a plain text(a very simple response) to the user, when a certain request comes in!
 
   // When i want to send a REQUEST to the SERVER, I have to RELOAD the BROWSER one Time! and in this case, i get again the same RESPONSE in the BROWSER => "Hello from the SERVER!"
   // console.log(req); // to see what includes the req object!
