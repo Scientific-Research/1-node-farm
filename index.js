@@ -11,7 +11,10 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const objectData = JSON.parse(data); // convert the JSON string to a JS object
 // 1) Create the Server => the callback fired off each time a new request hits the server:
+
 const server = http.createServer((req, res) => {
   console.log(req.url); // when i give http://127.0.0.1:8000/overview as request in the browser, i get this as req.url => /overview and /favicon.ico
 
@@ -23,6 +26,11 @@ const server = http.createServer((req, res) => {
   if (pathName === "/" || pathName === "/overview") {
     // res.end("This is the OVERVIEW page!");
 
+    // We have now get the JS object and loop over the content to get the features for the card:
+    objectData.map((d) => {
+      console.log(d);
+    });
+
     fs.readFile(
       `${__dirname}/templates/template-overview.html`,
       "utf-8",
@@ -31,10 +39,10 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, {
           "content-type": "text/html",
         });
-
-        data ? res.end(data) : res.end(err);
       }
     );
+
+    data ? res.end(data) : res.end(err);
 
     // Product page
   } else if (pathName === "/product") {
