@@ -16,7 +16,17 @@ const server = http.createServer((req, res) => {
   if (pathName === "/" || pathName === "/overview")
     res.end("This is the OVERVIEW page!");
   else if (pathName === "/product") res.end("This is the PRODUCT page!");
-  else {
+  else if (pathName === "/api") {
+    fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
+      res.writeHead(200, {
+        // The browser expects some JSON data => Therefore, our data would be JSON down below in our ternary operator!
+        "Content-type": "text/json",
+        "my-own-header": "hello-world",
+      });
+      data ? res.end(`${data}`) : res.end(`${err}`);
+      console.log(data);
+    });
+  } else {
     // res.writeHead(404, "The page not found!");
     res.writeHead(404, {
       // The browser expects some HTML file => Therefore, we write in res.end() down below a line of HTML!
