@@ -21,7 +21,7 @@ const server = http.createServer((req, res) => {
 
   // Overview page
   if (pathName === "/" || pathName === "/overview") {
-    res.end("This is the OVERVIEW page!");
+    // res.end("This is the OVERVIEW page!");
 
     fs.readFile(
       `${__dirname}/templates/template-overview.html`,
@@ -29,7 +29,7 @@ const server = http.createServer((req, res) => {
 
       (err, data) => {
         res.writeHead(200, {
-          "content-type": "application/json",
+          "content-type": "text/html",
         });
 
         data ? res.end(data) : res.end(err);
@@ -38,7 +38,7 @@ const server = http.createServer((req, res) => {
 
     // Product page
   } else if (pathName === "/product") {
-    res.end("This is the PRODUCT page!");
+    // res.end("This is the PRODUCT page!");
 
     fs.readFile(
       `${__dirname}/templates/template-product.html`,
@@ -46,7 +46,7 @@ const server = http.createServer((req, res) => {
 
       (err, data) => {
         res.writeHead(200, {
-          "content-type": "application/json",
+          "content-type": "text/html",
         });
 
         data ? res.end(data) : res.end(err);
