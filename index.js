@@ -26,7 +26,14 @@ const server = http.createServer((req, res) => {
     fs.readFile(
       `${__dirname}/templates/template-overview.html`,
       "utf-8",
-      (err, data) => {}
+
+      (err, data) => {
+        res.writeHead(200, {
+          "content-type": "application/json",
+        });
+
+        data ? res.end(data) : res.end(err);
+      }
     );
 
     // Product page
@@ -36,10 +43,16 @@ const server = http.createServer((req, res) => {
     fs.readFile(
       `${__dirname}/templates/template-product.html`,
       "utf-8",
+
       (err, data) => {
-        
+        res.writeHead(200, {
+          "content-type": "application/json",
+        });
+
+        data ? res.end(data) : res.end(err);
       }
     );
+
     // API page
   } else if (pathName === "/api") {
     // fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
