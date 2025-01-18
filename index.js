@@ -27,20 +27,23 @@ const server = http.createServer((req, res) => {
     // res.end("This is the OVERVIEW page!");
 
     // We have now get the JS object and loop over the content to get the features for the card:
-    objectData.map((d) => {
-      console.log(d);
+    const cardsHtml = objectData.map((d) => d);
 
-      objectData ? res.end(d) : res.end(err);
+    console.log(cardsHtml);
+
+    res.writeHead(200, {
+      "content-type": "application/json",
     });
+    cardsHtml ? res.end(JSON.stringify(cardsHtml)) : "";
 
     // fs.readFile(
     //   `${__dirname}/templates/template-overview.html`,
     //   "utf-8",
-
     //   (err, data) => {
     //     res.writeHead(200, {
     //       "content-type": "text/html",
     //     });
+    //     // data ? res.end(a.join("")) : res.end(err);
     //   }
     // );
 
