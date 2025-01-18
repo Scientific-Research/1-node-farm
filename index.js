@@ -18,10 +18,30 @@ const server = http.createServer((req, res) => {
   // IMPLEMENTING ROUTING => Have different responses for different routes:
   const pathName = req.url;
   //  "/" means root!
-  if (pathName === "/" || pathName === "/overview")
+
+  // Overview page
+  if (pathName === "/" || pathName === "/overview") {
     res.end("This is the OVERVIEW page!");
-  else if (pathName === "/product") res.end("This is the PRODUCT page!");
-  else if (pathName === "/api") {
+
+    fs.readFile(
+      `${__dirname}/templates/template-overview.html`,
+      "utf-8",
+      (err, data) => {}
+    );
+
+    // Product page
+  } else if (pathName === "/product") {
+    res.end("This is the PRODUCT page!");
+
+    fs.readFile(
+      `${__dirname}/templates/template-product.html`,
+      "utf-8",
+      (err, data) => {
+        
+      }
+    );
+    // API page
+  } else if (pathName === "/api") {
     // fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
     // A better version is to use __dirname instead of dot(.). in this case, it doesn't matter where you run your node, __dirname points out always to the current directory name!
     fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
@@ -53,6 +73,8 @@ const server = http.createServer((req, res) => {
       // console.log(data);
       /////////////////////////////////////////////
     });
+
+    // NOT FOUND PAGE
   } else {
     // res.writeHead(404, "The page not found!");
     res.writeHead(404, {
