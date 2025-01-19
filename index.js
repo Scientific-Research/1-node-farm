@@ -255,14 +255,15 @@ const cardsHtml = objectData
 const server = http.createServer((req, res) => {
   if (req.url === "/" || req.url === "/overview") {
     res.writeHead(200, { "Content-Type": "text/html" });
-    // res.end(`
-    //   <html>
-    //     <body>
-    //       <figure class="card">${cardsHtml}</figure>
-    //     </body>
-    //   </html>
-    // `);
-    res.end(cardsHtml);
+    res.end(`
+      <html>
+        <body>
+          <h1>🌽 Node Farm 🥦</h1>
+          ${cardsHtml}
+        </body>
+      </html>
+    `);
+    // res.end(cardsHtml);
   } else {
     res.writeHead(404, { "Content-Type": "text/html" });
     res.end("<h1>The Page could not be found - 404</h1>");
