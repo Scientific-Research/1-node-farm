@@ -37,6 +37,11 @@ const tempCard = fs.readFileSync(
   "utf-8"
 );
 
+const tempOverview = fs.readFileSync(
+  `${__dirname}/templates/template-overview.html`,
+  "utf-8"
+);
+
 const server = http.createServer((req, res) => {
   console.log(req.url); // when i give http://127.0.0.1:8000/overview as request in the browser, i get this as req.url => /overview and /favicon.ico
 
@@ -61,16 +66,26 @@ const server = http.createServer((req, res) => {
     // cardsHtml ? res.end(JSON.stringify(cardsHtml)) : ""; // This works!
     // cardsHtml ? res.end(cardsHtml) : ""; // This will not work!
 
-    fs.readFile(
-      `${__dirname}/templates/template-overview.html`,
-      "utf-8",
-      (err, data) => {
-        res.writeHead(200, {
-          "content-type": "text/html",
-        });
-        data ? res.end(data) : res.end(err);
-      }
-    );
+    // const tempOverview = fs.readFile(
+    //   `${__dirname}/templates/template-overview.html`,
+    //   "utf-8"
+    // );
+
+    // (err, data) => {
+    //   res.writeHead(200, {
+    //     "content-type": "text/html",
+    //   });
+    //   // data ? res.end(data) : res.end(err);
+    // };
+
+    res.writeHead(200, {
+      "content-type": "text/html",
+    });
+    // data ? res.end(data) : res.end(err);
+
+    // const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
+    const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
+    res.end(output);
 
     // Product page
   } else if (pathName === "/product") {
