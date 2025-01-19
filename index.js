@@ -1,180 +1,274 @@
-import fs from "fs"; // fs gives us a lot of functions and methods that we can use them here => The NODE is based on the different modules!
-
-// To get the networking capabilities: import another module => http => building a http server
+import fs from "fs";
 import http from "http";
 import url from "url";
-
-//////////////////////////////////////SERVER SECTION////////////////////////////
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+
 // Get the current directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Read and parse the JSON file
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
-const objectData = JSON.parse(data); // convert the JSON string to a JS object
-// 1) Create the Server => the callback fired off each time a new request hits the server:
+const objectData = JSON.parse(data);
 
-// const cardsHtml = objectData.map((el) => replaceTemplate(tempCard, el));
+// Map items to HTML strings
+const cardsHtml = objectData
+  .map((el) => {
+    return `
+    <!DOCTYPE html>
+      <html lang="en">
+       <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Megrim|Nunito+Sans:400,900"
+            rel="stylesheet"
+          />
+          <link
+            rel="icon"
+            href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/155/ear-of-maize_1f33d.png"
+          />
 
-const replaceTemplate = (temp, product) => {
-  let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
-  output = output.replace(/{%IMAGE%}/g, product.image);
-  output = output.replace(/{%PRICE%}/g, product.price);
-  output = output.replace(/{%FROM%}/g, product.from);
-  output = output.replace(/{%NUTRIENS%}/g, product.nutrients);
-  output = output.replace(/{%QUANTITY%}/g, product.quantity);
-  output = output.replace(/{%DESCRIPTION%}/g, product.description);
-  output = output.replace(/{%ID%}/g, product.id);
+          <title>NODE FARM</title>
 
-  if (!product.organic)
-    output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
-  return output;
-};
+          <style>
+            *,
+            *::before,
+            *::after {
+              margin: 0;
+              padding: 0;
+              box-sizing: inherit;
+            }
 
-const tempCard = fs.readFileSync(
-  `${__dirname}/templates/template-card.html`,
-  "utf-8"
-);
+            html {
+              font-size: 62.5%;
+              box-sizing: border-box;
+            }
 
-const tempOverview = fs.readFileSync(
-  `${__dirname}/templates/template-overview.html`,
-  "utf-8"
-);
+            body {
+              padding: 5rem 5rem 10rem;
+              line-height: 1.7;
+              font-family: "Nunito Sans", sans-serif;
+              color: #555;
+              min-height: 100vh;
+              background: linear-gradient(to bottom right, #9be15d, #00e3ae);
+            }
 
+            h1 {
+              font-family: "Megrim", sans-serif;
+              font-size: 6rem;
+              color: white;
+              transform: skewY(-5deg);
+              text-align: center;
+              position: relative;
+              word-spacing: 3px;
+            }
+
+            h1::before {
+              content: "";
+              display: block;
+              height: 65%;
+              width: 49%;
+              position: absolute;
+              top: 105%;
+              left: 50%;
+              background: linear-gradient(to bottom, #9be15d, #00e3ae);
+              opacity: 0.8;
+              z-index: -1;
+              transform: skewY(370deg) translate(-50%, -50%);
+            }
+
+            .container {
+              width: 95rem;
+              margin: 0 auto;
+            }
+
+            .cards-container {
+              margin-top: 8rem;
+            }
+
+            .card {
+              background: white;
+              box-shadow: 0 2rem 6rem 1rem rgba(0, 0, 0, 0.15);
+              margin-bottom: 5rem;
+              transform: skewX(-20deg);
+              display: flex;
+              transition: all 0.5s;
+            }
+
+            .card__emoji {
+              font-size: 5.5rem;
+              line-height: 1.2;
+              padding: 1.5rem 6rem 0.5rem 1.5rem;
+              letter-spacing: -4rem;
+              transform: skewX(20deg);
+            }
+
+            .card__title-box {
+              background: linear-gradient(to bottom, #9be15d, #00e3ae);
+              margin-right: auto;
+              display: flex;
+              align-items: center;
+              padding: 0 3rem;
+            }
+
+            .card__title {
+              font-family: "Megrim", sans-serif;
+              color: white;
+              font-size: 3.25rem;
+              transform: skewX(20deg);
+            }
+
+            .card__details {
+              display: flex;
+            }
+
+            .card__detail-box {
+              align-self: stretch;
+              border-right: 1px solid #ddd;
+              display: flex;
+              align-items: center;
+            }
+
+            .card__detail-box:last-child {
+              border: none;
+            }
+
+            .card__detail {
+              font-weight: 400;
+              font-size: 1.8rem;
+              transform: skewX(20deg);
+              padding: 1.75rem;
+            }
+
+            .card__detail--organic {
+              font-weight: 900;
+              text-transform: uppercase;
+              font-size: 1.9rem;
+              background-image: linear-gradient(to right, #9be15d, #00e3ae);
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+
+            .card__detail--price {
+              font-weight: 900;
+              font-size: 1.9rem;
+            }
+
+            .card__link:link,
+            .card__link:visited {
+              flex: 0 0 auto;
+              background-color: #79e17b;
+              color: white;
+              font-size: 1.6rem;
+              font-weight: 900;
+              text-transform: uppercase;
+              text-decoration: none;
+              padding: 2.5rem;
+              text-align: center;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: all 0.3s;
+            }
+
+            .card__link:hover,
+            .card__link:active {
+              background-color: #9be15d;
+            }
+
+            .card__link span {
+              transform: skewX(20deg);
+            }
+
+            .card:hover {
+              transform: skewX(-20deg) scale(1.08);
+              box-shadow: 0 3rem 8rem 2rem rgba(0, 0, 0, 0.15);
+            }
+
+            .emoji-left {
+              font-size: 2rem;
+              margin-right: 1rem;
+            }
+
+            .emoji-right {
+              font-size: 2rem;
+              margin-left: 1rem;
+            }
+
+            .not-organic {
+              display: none;
+            }
+          </style>
+        </head>
+
+  <body>
+    <div class="container">
+      <h1>🌽 Node Farm 🥦</h1>
+        <div class="cards-container">
+          <figure class="card">
+            <div class="card__emoji">${el.image}${el.image}</div>
+            <div class="card__title-box">
+              <h2 class="card__title">${el.productName}</h2>
+            </div>
+            <div class="card__details">
+              <div class="card__detail-box ${
+                el.notOrganic ? "not-organic" : ""
+              }">
+                <h6 class="card__detail card__detail--organic">Organic!</h6>
+              </div>
+              <div class="card__detail-box">
+                <h6 class="card__detail">${el.quantity} per 📦</h6>
+              </div>
+              <div class="card__detail-box">
+                <h6 class="card__detail card__detail--price">${el.price}€</h6>
+              </div>
+            </div>
+            <a class="card__link" href="/product?id=${el.id}">
+              <span>Detail <i class="emoji-right">👉</i></span>
+            </a>
+          </figure>
+      </div>
+    </div>
+        <script type="module">
+      import { cardsHtml } from "../index.js";
+      document.querySelector(".card__emoji").innerHTML = cardsHtml[0].image;
+      document.querySelector(".card__title").innerHTML = cardsHtml[0].title;
+      document.querySelector(".card__detail").innerHTML = cardsHtml[0].quantity;
+      document.querySelector(".card__detail--price").innerHTML =
+        cardsHtml[0].price;
+    </script>
+  </body>
+</html>
+  `;
+  })
+  .join("");
+
+console.log(cardsHtml);
+
+// Create the server
 const server = http.createServer((req, res) => {
-  console.log(req.url); // when i give http://127.0.0.1:8000/overview as request in the browser, i get this as req.url => /overview and /favicon.ico
-
-  // IMPLEMENTING ROUTING => Have different responses for different routes:
-  const pathName = req.url;
-  //  "/" means root!
-
-  // Overview page
-  if (pathName === "/" || pathName === "/overview") {
-    // res.end("This is the OVERVIEW page!");
-
-    // We have now get the JS object and loop over the content to get the features for the card:
-    const cardsHtml = objectData
-      .map((el) => replaceTemplate(tempCard, el))
-      .join("");
-
-    console.log(cardsHtml);
-
-    // res.writeHead(200, {
-    //   "content-type": "application/json",
-    // });
-    // cardsHtml ? res.end(JSON.stringify(cardsHtml)) : ""; // This works!
-    // cardsHtml ? res.end(cardsHtml) : ""; // This will not work!
-
-    // const tempOverview = fs.readFile(
-    //   `${__dirname}/templates/template-overview.html`,
-    //   "utf-8"
-    // );
-
-    // (err, data) => {
-    //   res.writeHead(200, {
-    //     "content-type": "text/html",
-    //   });
-    //   // data ? res.end(data) : res.end(err);
-    // };
-
-    res.writeHead(200, {
-      "content-type": "text/html",
-    });
-    // data ? res.end(data) : res.end(err);
-
-    // const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
-    const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
-    res.end(output);
-
-    // Product page
-  } else if (pathName === "/product") {
-    // res.end("This is the PRODUCT page!");
-
-    fs.readFile(
-      `${__dirname}/templates/template-product.html`,
-      "utf-8",
-
-      (err, data) => {
-        res.writeHead(200, {
-          "content-type": "text/html",
-        });
-
-        data ? res.end(data) : res.end(err);
-      }
-    );
-
-    // API page
-  } else if (pathName === "/api") {
-    // fs.readFile("./dev-data/data.json", "utf-8", (err, data) => {
-    // A better version is to use __dirname instead of dot(.). in this case, it doesn't matter where you run your node, __dirname points out always to the current directory name!
-    fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
-      /////////////////////////////////////////////
-      // Jonas Solution
-      const objectData = JSON.parse(data); // convert the JSON string to a JS object
-      console.log(objectData);
-      res.writeHead(200, {
-        // The browser expects some JSON data => Therefore, our data would be JSON down below in our ternary operator!
-        "Content-Type": "application/json",
-      });
-
-      // NOTE: The browser can display the JSON string and not the JS Object, Therefore, we have to convert the objectData as JS Object to a JSON string using JSON.stringify()
-      objectData ? res.end(`${JSON.stringify(objectData)}`) : res.end(`${err}`);
-      // data ? res.end(`${data}`) : res.end(`${err}`); // This is the same as above statement!
-
-      // NOTE: The browser can not display the JS Object and can display the JSON string, that's why the below statement will not work because the objectData is a JS object
-      // objectData ? res.end(`${objectData}`) : res.end(`${err}`);
-      /////////////////////////////////////////////
-
-      /////////////////////////////////////////////
-      // My Solution
-      // res.writeHead(200, {
-      //   // The browser expects some JSON data => Therefore, our data would be JSON down below in our ternary operator!
-      //   "Content-type": "text/json",
-      //   "my-own-header": "hello-world",
-      // });
-      // data ? res.end(`${data}`) : res.end(`${err}`);
-      // console.log(data);
-      /////////////////////////////////////////////
-    });
-
-    // NOT FOUND PAGE
+  if (req.url === "/" || req.url === "/overview") {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    // res.end(`
+    //   <html>
+    //     <body>
+    //       <figure class="card">${cardsHtml}</figure>
+    //     </body>
+    //   </html>
+    // `);
+    res.end(cardsHtml);
   } else {
-    // res.writeHead(404, "The page not found!");
-    res.writeHead(404, {
-      // The browser expects some HTML file => Therefore, we write in res.end() down below a line of HTML!
-      "Content-type": "text/html",
-      "my-own-header": "hello-world",
-    });
-    res.end(`<h1>The Page could not be found - 404</h1>`);
+    res.writeHead(404, { "Content-Type": "text/html" });
+    res.end("<h1>The Page could not be found - 404</h1>");
   }
-
-  // to send back a response to the client from server:
-  // Each time a new request hits our server, the call back function will be called and send a response to the user!
-
-  // res.end("Hello from the SERVER!"); // .end => to send a plain text(a very simple response) to the user, when a certain request comes in!
-
-  // When i want to send a REQUEST to the SERVER, I have to RELOAD the BROWSER one Time! and in this case, i get again the same RESPONSE in the BROWSER => "Hello from the SERVER!"
-  // console.log(req); // to see what includes the req object!
 });
 
-// 2) Run the server to listen to incoming request from the client:
-// START UP THE SERVER AND LISTENING TO THE INCOMING REQUETS:
-
-/* 
-what is nullish coalescing operator?
-The nullish coalescing operator (??) is a logical operator in JavaScript that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand
-*/
-
-// const PORT = 0 ?? 8000; SUPPORTS ONLY NULL AND UNDEFINED!
-
-const PORT = null || 8000; // IN ADDITION TO WHAT SUPPORT nullish coalescing operator, OR SUPPORTS false AND NaN TOO!
-
-//NOTE: only when the left-hand is null o undefined returns the right-hand operator but OR || supports the NaN and false values too => THTA'S WHY IS THE BEST TO USE OR INSTEAD OF ?? Operator!
-
-// server.listen(PORT, "127.0.0.1", () => { "127.0.0.1" is DEFAULT and we don't need even to mention it!
+// Start the server
+const PORT = 8000;
 server.listen(PORT, () => {
   console.log(`The server is listening on port ${PORT}...`);
 });
-
-// THE ANSWER FROM THE SERVER USING LOCAL IP ADDRESS IN THE BROWSER: http://127.0.0.1:3000/ => Hello from the SERVER!
