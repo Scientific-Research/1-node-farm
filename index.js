@@ -28,7 +28,8 @@ const replaceTemplate = (temp, product) => {
   output = output.replace(/{%ID%}/g, product.id);
 
   if (!product.organic)
-    output = output.temp.replace(/{%NOT_ORGANIC%}/g, "not-organic");
+    output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic");
+  return output;
 };
 
 const tempCard = fs.readFileSync(
@@ -48,7 +49,9 @@ const server = http.createServer((req, res) => {
     // res.end("This is the OVERVIEW page!");
 
     // We have now get the JS object and loop over the content to get the features for the card:
-    const cardsHtml = objectData.map((el) => replaceTemplate(tempCard, el));
+    const cardsHtml = objectData
+      .map((el) => replaceTemplate(tempCard, el))
+      .join("");
 
     console.log(cardsHtml);
 
