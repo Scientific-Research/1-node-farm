@@ -210,7 +210,6 @@ const cardsHtml = objectData
 
   <body>
     <div class="container">
-      <h1>🌽 Node Farm 🥦</h1>
         <div class="cards-container">
           <figure class="card">
             <div class="card__emoji">${el.image}${el.image}</div>
