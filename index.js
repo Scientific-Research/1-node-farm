@@ -15,6 +15,11 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const objectData = JSON.parse(data); // convert the JSON string to a JS object
 // 1) Create the Server => the callback fired off each time a new request hits the server:
 
+const tempCard = fs.readFileSync(
+  `${__dirname}/templates/template-card.html`,
+  "utf-8"
+);
+
 const server = http.createServer((req, res) => {
   console.log(req.url); // when i give http://127.0.0.1:8000/overview as request in the browser, i get this as req.url => /overview and /favicon.ico
 
@@ -27,25 +32,26 @@ const server = http.createServer((req, res) => {
     // res.end("This is the OVERVIEW page!");
 
     // We have now get the JS object and loop over the content to get the features for the card:
-    const cardsHtml = objectData.map((d) => d);
+    const cardsHtml = objectData.map((el) => replaceTemplate(tempCard, el));
 
     console.log(cardsHtml);
 
-    res.writeHead(200, {
-      "content-type": "application/json",
-    });
-    cardsHtml ? res.end(JSON.stringify(cardsHtml)) : "";
+    // res.writeHead(200, {
+    //   "content-type": "application/json",
+    // });
+    // cardsHtml ? res.end(JSON.stringify(cardsHtml)) : ""; // This works!
+    // cardsHtml ? res.end(cardsHtml) : ""; // This will not work!
 
-    // fs.readFile(
-    //   `${__dirname}/templates/template-overview.html`,
-    //   "utf-8",
-    //   (err, data) => {
-    //     res.writeHead(200, {
-    //       "content-type": "text/html",
-    //     });
-    //     // data ? res.end(a.join("")) : res.end(err);
-    //   }
-    // );
+    fs.readFile(
+      `${__dirname}/templates/template-overview.html`,
+      "utf-8",
+      (err, data) => {
+        res.writeHead(200, {
+          "content-type": "text/html",
+        });
+        data ? res.end(data) : res.end(err);
+      }
+    );
 
     // Product page
   } else if (pathName === "/product") {
