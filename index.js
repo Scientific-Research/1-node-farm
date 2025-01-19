@@ -12,6 +12,8 @@ const __dirname = dirname(__filename);
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const objectData = JSON.parse(data);
 
+console.log(objectData);
+
 // Map items to HTML strings
 const cardsHtml = objectData
   .map((el) => {
@@ -31,7 +33,8 @@ const cardsHtml = objectData
             href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/155/ear-of-maize_1f33d.png"
           />
 
-          <title>NODE FARM</title>
+          <link rel="icon" href="🥦🌽" />
+          <title>🌽 Node Farm 🥦</title>
 
           <style>
             *,
@@ -216,7 +219,7 @@ const cardsHtml = objectData
             </div>
             <div class="card__details">
               <div class="card__detail-box ${
-                el.notOrganic ? "not-organic" : ""
+                el.organic ? "Organic!" : "not-organic"
               }">
                 <h6 class="card__detail card__detail--organic">Organic!</h6>
               </div>
@@ -247,7 +250,7 @@ const cardsHtml = objectData
   })
   .join("");
 
-console.log(cardsHtml);
+// console.log(cardsHtml);
 
 // Create the server
 const server = http.createServer((req, res) => {
