@@ -545,9 +545,9 @@ const productHtmlFunction = (id) => {
       </div>
       <h2 class="product__name">${objectData[id]?.productName}</h2>
       <div class="product__details">
-      <p><span class="emoji-left">🌍</span> ${objectData[id]?.from}</p>
+      <p><span class="emoji-left">🌍</span> From ${objectData[id]?.from}</p>
       <p><span class="emoji-left">❤️</span> ${objectData[id]?.nutrients}</p>
-      <p><span class="emoji-left">📦</span> ${objectData[id]?.quantity} 🥑</p>
+      <p><span class="emoji-left">📦</span> ${objectData[id]?.quantity}</p>
       <p><span class="emoji-left">🏷</span> ${objectData[id]?.price}€</p>
       </div>
       
