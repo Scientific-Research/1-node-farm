@@ -246,6 +246,14 @@ const cardsHtml = objectData
           </figure>
       </div>
     </div>
+        <script type="module">
+      import { cardsHtml } from "../index.js";
+      document.querySelector(".card__emoji").innerHTML = cardsHtml[0].image;
+      document.querySelector(".card__title").innerHTML = cardsHtml[0].title;
+      document.querySelector(".card__detail").innerHTML = cardsHtml[0].quantity;
+      document.querySelector(".card__detail--price").innerHTML =
+        cardsHtml[0].price;
+    </script>
   </body>
 </html>
   `;
@@ -560,6 +568,14 @@ const productHtml = `
         </p>
       </figure>
     </div>
+    <script type="module">
+      import { cardsHtml } from "../index.js";
+      document.querySelector(".product__emoji").innerHTML = productHtml[0].image;
+      document.querySelector(".product__name").innerHTML = productHtml[0].title;
+      document.querySelector(".product__detail").innerHTML = productHtml[0].quantity;
+      document.querySelector(".product__detail--price").innerHTML =
+        productHtml[0].price;
+    </script>
   </body>
 </html>
   `;
