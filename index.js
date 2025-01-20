@@ -12,7 +12,7 @@ const __dirname = dirname(__filename);
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const objectData = JSON.parse(data);
 
-console.log(objectData);
+// console.log(objectData);
 
 // Map items to HTML strings
 const cardsHtml = objectData
@@ -253,6 +253,17 @@ const cardsHtml = objectData
 
 // Create the server
 const server = http.createServer((req, res) => {
+  // console.log(req.url);
+  // console.log(req.url.split("=")[1]);
+
+  const { query, pathname } = url.parse(req.url, true);
+  console.log(query, pathname);
+
+  const id = req.url.split("=")[1];
+  console.log(id);
+
+  // console.log(url.parse(req.url, true));
+
   if (req.url === "/" || req.url === "/overview") {
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(`
@@ -264,6 +275,14 @@ const server = http.createServer((req, res) => {
       </html>
     `);
     // res.end(cardsHtml);
+    // } else if (req.url === `"/product?id = ${id}"`) {
+    // /product?id=0
+  } else if (req.url === "/product?id=" + id) {
+    console.log(req.url);
+    console.log("Hallo from the new page!");
+
+    res.writeHead(404, { "Content-Type": "text/html" });
+    res.end("Hallo from the product page with id:" + id);
   } else {
     res.writeHead(404, { "Content-Type": "text/html" });
     res.end("<h1>The Page could not be found - 404</h1>");
