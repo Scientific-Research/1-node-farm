@@ -528,36 +528,56 @@ const productHtmlFunction = (id) => {
       <h1>🌽 Node Farm 🥦</h1>
 
       <figure class="product">
-      <div class="product__organic"><h5>Organic</h5></div>
+      <div class="${objectData[id].organic ? "product__organic" : ""}"><h5>${
+    objectData[id].organic ? "Organic" : ""
+  }</h5></div>
       <a href="#" class="product__back">
       <span class="emoji-left">👈</span>Back
       </a>
       <div class="product__hero">
-      <span class="product__emoji product__emoji--1">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--2">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--3">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--4">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--5">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--6">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--7">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--8">${objectData[id]?.image}</span>
-      <span class="product__emoji product__emoji--9">${objectData[id]?.image}</span>
+      <span class="product__emoji product__emoji--1">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--2">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--3">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--4">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--5">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--6">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--7">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--8">${
+        objectData[id].image
+      }</span>
+      <span class="product__emoji product__emoji--9">${
+        objectData[id].image
+      }</span>
       </div>
-      <h2 class="product__name">${objectData[id]?.productName}</h2>
+      <h2 class="product__name">${objectData[id].productName}</h2>
       <div class="product__details">
-      <p><span class="emoji-left">🌍</span> From ${objectData[id]?.from}</p>
-      <p><span class="emoji-left">❤️</span> ${objectData[id]?.nutrients}</p>
-      <p><span class="emoji-left">📦</span> ${objectData[id]?.quantity}</p>
-      <p><span class="emoji-left">🏷</span> ${objectData[id]?.price}€</p>
+      <p><span class="emoji-left">🌍</span> From ${objectData[id].from}</p>
+      <p><span class="emoji-left">❤️</span> ${objectData[id].nutrients}</p>
+      <p><span class="emoji-left">📦</span> ${objectData[id].quantity}</p>
+      <p><span class="emoji-left">🏷</span> ${objectData[id].price}€</p>
       </div>
       
       <a href="#" class="product__link">
       <span class="emoji-left">🛒</span>
-      <span>Add to shopping card (${objectData[id]?.price}€)</span>
+      <span>Add to shopping card (${objectData[id].price}€)</span>
       </a>
       
       <p class="product__description">
-      ${objectData[id]?.description}
+      ${objectData[id].description}
       </p>
       </figure>
       </div>
