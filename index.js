@@ -531,7 +531,7 @@ const productHtmlFunction = (id) => {
       <div class="${objectData[id].organic ? "product__organic" : ""}"><h5>${
     objectData[id].organic ? "Organic" : ""
   }</h5></div>
-      <a href="#" class="product__back">
+      <a href="/overview" class="product__back">
       <span class="emoji-left">👈</span>Back
       </a>
       <div class="product__hero">
