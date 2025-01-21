@@ -6,7 +6,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon --watch . --ext js,html,css,json --exec node index.js"
   },
   "keywords": [],
   "license": "ISC",
